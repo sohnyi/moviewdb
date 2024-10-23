@@ -44,7 +44,7 @@ class TopRateMoviesActivity : AppCompatActivity() {
         LoadStateFooterAdapter { movieAdapter.retry() }
     }
 
-    val combinedAdapter by lazy {
+    private val combinedAdapter by lazy {
         movieAdapter.withLoadStateFooter(footerAdapter)
     }
 
