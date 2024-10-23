@@ -10,8 +10,14 @@ material = "1.12.0"
 activity = "1.9.3"
 constraintlayout = "2.1.4"
 
-# Squeare
+#coroutines
+coroutines = "1.3.9"
+
+paging3 = "3.3.2"
+
+#Squeare
 retrofit2 = "2.11.0"
+okhttp3 = "4.12.0"
 
 #Glide
 glide = "4.16.0"
@@ -27,9 +33,15 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 
+#coroutines
+coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+
+paging3 = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging3" }
+
 #Square
 retrofit2 = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit2" }
 retrofit2-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit2" }
+okhttp3-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp3" }
 
 #glide
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
