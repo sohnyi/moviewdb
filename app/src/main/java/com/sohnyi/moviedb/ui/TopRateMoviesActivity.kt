@@ -9,7 +9,6 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
-import androidx.paging.LoadStateAdapter
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sohnyi.moviedb.data.TMDBRepository
@@ -81,7 +80,7 @@ class TopRateMoviesActivity : AppCompatActivity() {
 
     private fun ActivityTopRateMoviesBinding.bindUI(
         adapter: MoviesAdapter,
-        pagingDataFlow: Flow<PagingData<Movie>>
+        pagingDataFlow: Flow<PagingData<Movie>>,
     ) {
         bindList(
             adapter = adapter,
@@ -93,12 +92,18 @@ class TopRateMoviesActivity : AppCompatActivity() {
 
 
     private fun ActivityTopRateMoviesBinding.bindState(
-        adapter: MoviesAdapter
+        adapter: MoviesAdapter,
     ) {
         lifecycleScope.launch {
             adapter.loadStateFlow.collectLatest { state ->
                 progressCircular.isVisible = state.refresh is LoadState.Loading
                 btnRetry.isVisible = state.refresh is LoadState.Error
+
+                tvEmpty.isVisible =
+                        adapter.itemCount == 0
+                                && state.refresh is LoadState.NotLoading
+
+
             }
         }
 
@@ -109,7 +114,7 @@ class TopRateMoviesActivity : AppCompatActivity() {
 
     private fun ActivityTopRateMoviesBinding.bindList(
         adapter: MoviesAdapter,
-        pagingDataFlow: Flow<PagingData<Movie>>
+        pagingDataFlow: Flow<PagingData<Movie>>,
     ) {
         lifecycleScope.launch {
             pagingDataFlow.collectLatest { pagingData ->
