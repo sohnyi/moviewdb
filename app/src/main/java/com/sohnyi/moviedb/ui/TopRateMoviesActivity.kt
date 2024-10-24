@@ -1,11 +1,13 @@
 package com.sohnyi.moviedb.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -18,7 +20,6 @@ import com.sohnyi.moviedb.ui.adapter.LoadStateFooterAdapter
 import com.sohnyi.moviedb.ui.adapter.MoviesAdapter
 import com.sohnyi.moviedb.viewmodel.TopRateMoviesViewModel
 import com.sohnyi.moviedb.viewmodel.ViewModelFactory
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -73,18 +74,16 @@ class TopRateMoviesActivity : AppCompatActivity() {
 
         binding.bindUI(
             adapter = movieAdapter,
-            pagingDataFlow = viewModel.pagingDataFlow
         )
+
     }
 
 
     private fun ActivityTopRateMoviesBinding.bindUI(
         adapter: MoviesAdapter,
-        pagingDataFlow: Flow<PagingData<Movie>>,
     ) {
         bindList(
             adapter = adapter,
-            pagingDataFlow = pagingDataFlow
         )
 
         bindState(adapter = adapter)
@@ -96,12 +95,13 @@ class TopRateMoviesActivity : AppCompatActivity() {
     ) {
         lifecycleScope.launch {
             adapter.loadStateFlow.collectLatest { state ->
+                Log.i(TAG, "bindState: loadStateFlow state: $state")
                 progressCircular.isVisible = state.refresh is LoadState.Loading
                 btnRetry.isVisible = state.refresh is LoadState.Error
 
                 tvEmpty.isVisible =
-                        adapter.itemCount == 0
-                                && state.refresh is LoadState.NotLoading
+                    adapter.itemCount == 0
+                            && state.refresh is LoadState.NotLoading
 
 
             }
@@ -114,13 +114,14 @@ class TopRateMoviesActivity : AppCompatActivity() {
 
     private fun ActivityTopRateMoviesBinding.bindList(
         adapter: MoviesAdapter,
-        pagingDataFlow: Flow<PagingData<Movie>>,
     ) {
-        lifecycleScope.launch {
-            pagingDataFlow.collectLatest { pagingData ->
+
+        viewModel.getTopRatedMovies().observe(this@TopRateMoviesActivity) { pagingData ->
+            lifecycleScope.launch {
                 adapter.submitData(pagingData)
             }
         }
+
 
         /*lifecycleScope.launch {
             while (true) {
