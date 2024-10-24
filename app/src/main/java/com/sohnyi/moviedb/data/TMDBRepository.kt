@@ -1,7 +1,6 @@
 package com.sohnyi.moviedb.data
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData

@@ -7,15 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
-import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sohnyi.moviedb.data.TMDBRepository
 import com.sohnyi.moviedb.databinding.ActivityTopRateMoviesBinding
-import com.sohnyi.moviedb.model.Movie
 import com.sohnyi.moviedb.ui.adapter.LoadStateFooterAdapter
 import com.sohnyi.moviedb.ui.adapter.MoviesAdapter
 import com.sohnyi.moviedb.viewmodel.TopRateMoviesViewModel
