@@ -6,6 +6,11 @@ import retrofit2.http.Query
 
 interface TMDBService {
 
+    /**
+     * 获取 Top Rated Movies
+     * @param page 页码
+     * @param language 语言
+     */
     @GET("3/movie/top_rated")
     suspend fun getTopRatedMovies(
         @Query("page") page: Int,
